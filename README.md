@@ -48,6 +48,7 @@ Am efectuat urmatoarele modificari:
 | `debt_ratio`       | float     | Venit dedicat datoriilor procentual |
 | `monthly_inc`      | int       | Salariu |
 | `open_credit`      | int       | Credite active |
+| `real_estate`      | int       | Imprumuturi pentru locuinta |
 | `late`             | string    | Valoare categoriala (`none`, `low`, ...) |
 | `inc_per_dep`      | float     | Venit per membrii familiei |
 | `relationship_status` | string | Valoare categoriala |
@@ -76,3 +77,33 @@ Setul de date final contine aproximativ 16.000 de înregistrari, impartite in: 1
 Toate aceste modificari aduc la un set de date diversificat pe care il putem utiliza pentru determinarea delincventei unei persoane.
 
 Totodata, am ales sa fac o simulare de date lipsa in coloana de relationship_status doar acolo unde indivizii nu aveau niciun dependent, de unde rezulta si aparitia statusului "unknown".
+
+## 6. Analiza exploratorie a datelor
+
+- Am analizat distributia variabilelor numerice cu ajutorul histogramelor si am observat prezenta outlieriilor, pe care i-am eliminat.
+- Pentru variabilele categoriale, am folosit count plots ca sa afisez si relatia dintre ele cu tinta `dlq_2yrs`.
+- Din matricea de corelatie am vazut cum se leaga variabilele cu tinta, si am observat ca doar 2 dintre ele (`open_credit` si `real_estate`) nu erau foarte relevante.
+
+Pentru mai multe detalii, uita-te in acest [Notebook](https://github.com/TrojiGareer/Delinquency-Prediction/blob/main/eda.ipynb).
+
+---
+
+## 7. Antrenarea si evaluarea unui model de baza
+
+Am ales sa folosesc un model simplu de tip **K-Nearest Neighbors (KNN)** pentru a incerca sa prezic variabila `dlq_2yrs`.
+
+### Rezultate
+
+- Dupa aplicarea modelului pe un set de date de 16.000 de oameni, am testat mai multe valori pentru `k` si am observat ca valoarea `k=50` ofera cea mai buna acuratete, rezultatele au fost urmatoarele:
+
+| Clasa    | Precizie | Recall | F1-Score | Acuratete |
+|----------|----------|--------|----------|-----------|
+| 0        | 0.74     | 0.80   | 0.76     |           |
+| 1        | 0.78     | 0.71   | 0.74     |           |
+| dlq_2yrs | 0.76     | 0.75   | 0.75     | 0.75      |
+
+### Matricea de confuzie
+
+Modelul are o performanta buna, dar tot riscam daca vrem sa anticipam corect persoanele care vor avea probleme de plata.
+
+![Matricea de confuzie](confusion_matrix_knn.png)
