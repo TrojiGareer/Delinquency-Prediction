@@ -78,6 +78,8 @@ Toate aceste modificari aduc la un set de date diversificat pe care il putem uti
 
 Totodata, am ales sa fac o simulare de date lipsa in coloana de relationship_status doar acolo unde indivizii nu aveau niciun dependent, de unde rezulta si aparitia statusului "unknown".
 
+---
+
 ## 6. Analiza exploratorie a datelor
 
 - Am analizat distributia variabilelor numerice cu ajutorul histogramelor si am observat prezenta outlieriilor, pe care i-am eliminat.
